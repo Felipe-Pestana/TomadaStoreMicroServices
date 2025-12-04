@@ -19,12 +19,31 @@ namespace TomadaStore.CustomerAPI.Repository
             _connection = connection.GetConnection();
         }
 
-        public Task<List<Customer>> GetAllCustomersAsync()
+        public async Task<List<CustomerResponseDTO>> GetAllCustomersAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var sqlSelect = @"SELECT Id, FirstName, LastName, Email, PhoneNumber 
+                                    FROM Customers";
+
+                var customers = await _connection.QueryAsync<CustomerResponseDTO>(sqlSelect);
+
+                return customers.ToList() ;
+
+            }
+            catch(SqlException sqlEx)
+            {
+                _logger.LogError($"SQL Error retrieving customers: {sqlEx.Message}");
+                throw new Exception(sqlEx.StackTrace);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving customers: {ex.Message}");
+                throw new Exception(ex.StackTrace);
+            }
         }
 
-        public Task<Customer> GetCustomerByIdAsync(int id)
+        public Task<CustomerResponseDTO> GetCustomerByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
