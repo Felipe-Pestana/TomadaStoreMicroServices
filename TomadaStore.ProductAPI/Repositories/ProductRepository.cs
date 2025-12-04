@@ -31,6 +31,7 @@ namespace TomadaStore.ProductAPI.Repositories
                     productDTO.Price,
                     new Category
                     (
+                        productDTO.Category.ToString(),
                         productDTO.Category.Name,
                         productDTO.Category.Description
                     )

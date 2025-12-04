@@ -16,5 +16,7 @@ namespace TomadaStore.Models.Models
             Name = name;
             Description = description;
         }
+
+
     }
 }
